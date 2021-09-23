@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/admintemplate.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="District List" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card">
+						<h1>
+							<p:commandButton value="Add New" oncomplete="PF('district').show()" 
+							icon="fa fa-plus" update="@widgetVar(district)"/>
+						</h1>
+						<p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{main.districtList}" var="pro">
+
+							<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+							<p:column headerText="Province Name">
+									#{pro.name}
+						</p:column>
+							<p:column headerText="District" width="120">
+								<center>
+									<p:commandButton icon="fa fa-list"
+										actionListener="#{main.hospitalPage(pro)}" />
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:form>
+			<p:dialog showEffect="clip"
+				header="Registrar District" hideEffect="clip"
+				closable="true" modal="true" widgetVar="district" width="400">
+
+				<p:fieldset legend="District">
+					<h:panelGroup styleClass="md-inputfield">
+							<p:inputText value="#{main.district.name}" />
+							<label>District name</label>
+					</h:panelGroup>
+				</p:fieldset>
+				<f:facet name="footer">
+					<p:commandButton value="Save" icon="fa fa-save"
+						actionListener="#{main.saveDistrict()}"
+						onclick="PF('district').hide()" update="@all" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

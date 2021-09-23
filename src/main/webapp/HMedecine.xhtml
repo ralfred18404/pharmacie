@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Medecine List" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<p:dataGrid var="product" value="#{access.drugList}"
+					columns="3" layout="grid" style="margin-top:10px;">
+					
+					<p:commandLink actionListener="#{access.hospitalMedecinePage(product)}" >
+					<p:panel header="#{product.name} (#{access.drugsList(product).size()})" toggleable="true"
+						style="text-align:center">
+						<p:panelGrid columns="1" layout="grid"
+							styleClass="ui-panelgrid-blank form-group">
+							<p:graphicImage style="height: 100px; width:240px;" cache="false"
+								styleClass="img-circle" value="#{access.proPic}">
+								<f:param name="image" value="#{product.id}"/>
+							</p:graphicImage>
+						</p:panelGrid>
+					</p:panel>
+					</p:commandLink>
+				</p:dataGrid>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.url">
+			jdbc:mysql://localhost:3306/pharmacie
+		</property>
+		<property name="connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
+		<property name="connection.username">
+			root
+		</property>
+		<property name="connection.password">
+			math77
+		</property>
+		<property name="dialect">
+			org.hibernate.dialect.MySQL5Dialect
+		</property>
+		<property name="show_sql">true</property>
+		<property name="hbm2ddl.auto">update</property>
+
+		<mapping class="com.domain.Category" />
+		<mapping class="com.domain.Director" />
+		<mapping class="com.domain.District" />
+		<mapping class="com.domain.Drugs" />
+		<mapping class="com.domain.Hospital" />
+		<mapping class="com.domain.Pharmacie" />
+		<mapping class="com.domain.Province" />
+		<mapping class="com.domain.Request" />
+		<mapping class="com.domain.DrugsRequest" />
+		
+	</session-factory>
+</hibernate-configuration>

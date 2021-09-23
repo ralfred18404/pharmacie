@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pu="http://primefaces.org/ultima">
+
+	<h:form id="menuform">
+		<div class="layout-menu #{guestPreferences.menuClass}">
+			<div class="nano">
+				<div class="nano-content menu-scroll-content">
+					<ui:fragment
+						rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+						<div class="profile">
+							<div class="profile-image"></div>
+							<a id="profile-options" href="#"> <span class="profile-name">Jane
+									Williams</span> <i class="material-icons">&#xE313;</i>
+							</a>
+						</div>
+
+						<ul id="profile-menu" class="ultima-menu">
+							<li role="menuitem"><a href="#" class="ripplelink"> <i
+									class="material-icons">&#xE7FD;</i> <span>Profile</span>
+							</a></li>
+							<li role="menuitem"><a href="#" class="ripplelink"> <i
+									class="material-icons">&#xE32A;</i> <span>Privacy</span>
+							</a></li>
+							<li role="menuitem"><a href="#" class="ripplelink"> <i
+									class="material-icons">&#xE8B9;</i> <span>Settings</span>
+							</a></li>
+							<li role="menuitem"><a href="#" class="ripplelink"> <i
+									class="material-icons">&#xE8AC;</i> <span>Logout</span>
+							</a></li>
+						</ul>
+					</ui:fragment>
+					<h:panelGroup rendered="#{access.director.pharmacie.ids != null}">
+						<pu:menu widgetVar="me">
+							<p:menuitem value="Medecine" outcome="RegisterDrugs.xhtml" icon="fa fa-medkit" />
+							<p:menuitem value="Request" actionListener="#{access.pharmaciePageRequest()}" icon="fa fa-recycle" />
+						</pu:menu>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{access.director.hospital.id != null}">
+						<pu:menu widgetVar="me">
+							<p:menuitem value="Pharmacie" actionListener="#{access.pharmaciePage()}" icon="fa fa-hospital-o" />
+							<p:menuitem value="Request" actionListener="#{access.MyrequestPage()}" icon="fa fa-random" />
+							<p:menuitem value="Medical Stock" actionListener="#{access.hospitalDrugsPage()}" icon="fa fa-list" />
+						</pu:menu>
+					</h:panelGroup>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>

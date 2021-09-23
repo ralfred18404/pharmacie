@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Medecine List" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card">
+						<h1>
+							<p:commandButton value="Add New"
+								oncomplete="PF('district').show()" icon="fa fa-plus"
+								update="@widgetVar(district)" />
+						</h1>
+						<p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{access.drugList}" var="pro">
+
+							<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+							<p:column headerText="Drugs Name">
+									#{pro.name}
+						</p:column>
+							<p:column headerText="Description">
+								#{pro.description}
+							</p:column>
+							<p:column headerText="Category" width="120">
+								<center>
+									<p:commandButton icon="fa fa-list"
+										actionListener="#{access.drugsCategoryPage(pro)}" />
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:form>
+			<p:dialog showEffect="clip" header="Registrar Medecine Info"
+				hideEffect="clip" closable="true" modal="true" widgetVar="district"
+				>
+
+				<p:fieldset legend="Medecine info">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText value="#{access.drugs.name}" />
+						<label>Medecine name</label>
+					</h:panelGroup>
+					<p:fieldset legend="Upload Image">
+						<p:fileUpload fileUploadListener="#{access.uploadPic}"
+							mode="advanced" dragDropSupport="false" multiple="true"
+							fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+							style="width:100%" label="Upload" />
+					</p:fieldset>
+					<p:fieldset legend="Description">
+						<p:inputTextarea value="#{access.drugs.description}" rows="10"
+							cols="30" counter="display" maxlength="250"
+							counterTemplate="{0} characters remaining." autoResize="false"
+							style="width:98%;" />
+					</p:fieldset>
+					<h:outputText id="display" />
+				</p:fieldset>
+				<f:facet name="footer">
+					<p:commandButton value="Save" icon="fa fa-save"
+						actionListener="#{access.registerDrugs()}"
+						onclick="PF('district').hide()" update="@all" ajax="false" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

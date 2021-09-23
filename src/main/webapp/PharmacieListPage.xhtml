@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Pharmacy List" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card">
+						
+						<p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{access.pharmacieList}" var="pro">
+
+							<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+							<p:column headerText="Pharmacy Name">
+									#{pro.name}
+						</p:column>
+							<p:column headerText="Medecine" width="120">
+								<center>
+									<p:commandButton icon="fa fa-list" actionListener="#{access.pharmacyDrugsPage(pro)}"/>
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

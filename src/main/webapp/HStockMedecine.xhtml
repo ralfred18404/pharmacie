@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Drugs Category For Hospital" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card">
+						<h1>
+							<p:button value="View List"
+								 icon="fa fa-list" outcome="HViewList.xhtml"/>
+						</h1>
+						<p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{access.hospitalDrugs}" var="pro">
+
+							<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+							<p:column headerText="Drugs Type">
+									#{pro.category.name}
+						</p:column>
+							<p:column headerText="grammes">
+								#{pro.category.gramme}
+							</p:column>
+							<p:column headerText="Box">
+								#{pro.category.box}
+							</p:column>
+							<p:column headerText="pieces">
+								#{pro.category.quantity}
+							</p:column>
+							<p:column headerText="Expired Date">
+								#{pro.category.expiredDate}
+							</p:column>
+							<p:column headerText="Option">
+								<center>
+									<p:commandLink  update="@all" actionListener="#{access.updateDrugsRequest(pro)}">
+									 <p:confirm header="Confirmation"
+													message="Are you sure you want to make this medecine Expired??"
+													icon="ui-icon-warning" />
+										<i class="fa fa-close"></i>
+										<span>Expired</span>
+									</p:commandLink>
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:form>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				width="500">
+				<p:commandButton value="Yes" type="button" ajax="false"
+					styleClass="ui-confirmdialog-yes GreenButton" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no RedButton" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+
+<ui:define name="head">
+ <f:event listener="#{access.makeRequest()}" type="preRenderView"></f:event> 
+</ui:define>
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-6">
+                <div class="card" >
+                    <h1>Successfully Payment Page</h1>
+                    <img src="resources/image/payment.png" style="width: 500px;
+                          height: 80%;"/>
+                </div>
+            </div>
+             <div class="ui-g-6">
+                <div class="card" >
+                    <p:commandLink>
+                    <i class="fa fa-print" ></i>
+                    <span>Print</span>
+                    <p:printer target="tab"/>
+                    </p:commandLink>
+                   <p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{access.drugsRequestList1}" var="pro">
+
+							<f:facet name="header"> 
+							<b style="color:black;">Customer Name: #{access.director.firstName} #{access.director.lastName}
+							
+							</b><br/>
+							<b style="color:black;">Pharmacy Name: #{access.pharmacieName}</b>
+							</f:facet>
+							
+							
+							<p:column headerText="Drugs Type">
+									#{pro.category.drugs.name} #{pro.category.name}
+						</p:column>
+							<p:column headerText="grammes">
+								#{pro.category.gramme}
+							</p:column>
+							<p:column headerText="Quantity">
+								#{pro.quantity}
+							</p:column>
+							<p:column headerText="Unit Price">
+								#{pro.category.amount} $
+							</p:column>
+							<p:column headerText="Total Amount">
+								#{pro.amountPaid} $
+							</p:column>
+							<p:columnGroup type="footer">
+                 <p:row>
+                    <p:column footerText="Total Amount: " style="text-align:right;"/>
+                    <p:column footerText="#{access.totalAmount1} $" />
+                </p:row>
+            </p:columnGroup>
+						</p:dataTable>
+						
+                </div>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

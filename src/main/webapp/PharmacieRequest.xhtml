@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Drugs On The List" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						
+						<p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{access.drugsRequestList1}" var="pro">
+
+							<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+								<p:column headerText="Hospital">
+									#{pro.request.director.hospital.name}
+						</p:column>
+							<p:column headerText="Drugs Type">
+									#{pro.category.drugs.name} #{pro.category.name}
+						</p:column>
+						
+							<p:column headerText="grammes">
+								#{pro.category.gramme}
+							</p:column>
+							<p:column headerText="Box">
+								#{pro.quantity}
+							</p:column>
+							<p:column headerText="Received Boxes">
+								#{pro.receivedQuantity}
+							</p:column>
+							<p:column headerText="Remain Boxes">
+								#{pro.quantity - pro.receivedQuantity}
+							</p:column>
+							<p:column headerText="pieces">
+								#{pro.category.quantity}
+							</p:column>
+							<p:column headerText="Expired Date">
+								#{pro.category.expiredDate}
+							</p:column>
+							<p:column headerText="Option" width="80">
+							<center>
+							<h:panelGroup rendered="#{pro.quantity != pro.receivedQuantity}">
+								<p:commandButton icon="fa fa-plus" oncomplete="PF('quantity').show()"
+								 update="@widgetVar(quantity)" actionListener="#{access.drugsReqeustDialog(pro)}"/>
+								 </h:panelGroup>
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:form>
+			<p:dialog showEffect="clip" hideEffect="clip" closable="true"
+				modal="true" widgetVar="quantity" width="400">
+				<p:fieldset legend="Product Boxes">
+					<h:panelGrid columns="2">
+						<h:panelGroup styleClass="md-inputfield">
+							<p:inputNumber value="#{access.boxes1}">
+							</p:inputNumber>
+							<label>Boxes</label>
+						</h:panelGroup>
+						
+					</h:panelGrid>
+				</p:fieldset>
+				<f:facet name="footer">
+					<p:commandButton value="approve" icon="fa fa-check"
+						actionListener="#{access.respondRequest()}"
+						oncomplete="PF('quantity').hide()"
+						update="@all" ajax="false" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

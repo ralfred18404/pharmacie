@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/admintemplate.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Province List" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card">
+						<h1>
+							<p:commandButton value="Add New" oncomplete="PF('province').show()" 
+							icon="fa fa-plus" update="@widgetVar(province)"/>
+						</h1>
+						<p:dataTable id="tab" style="margin-top:10px; width:100%"
+							value="#{main.provinceList}" var="pro">
+
+							<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+							<p:column headerText="Province Name">
+									#{pro.name}
+						</p:column>
+
+							<p:column headerText="District" width="120">
+								<center>
+									<p:commandButton icon="fa fa-list"
+										actionListener="#{main.districtPage(pro)}" />
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:form>
+			<p:dialog showEffect="clip"
+				header="Registrar Province" hideEffect="clip"
+				closable="true" modal="true" widgetVar="province" width="400">
+
+				<p:fieldset legend="Province">
+					<h:panelGroup styleClass="md-inputfield">
+							<p:inputText value="#{main.province.name}" />
+							<label>province name</label>
+					</h:panelGroup>
+				</p:fieldset>
+				<f:facet name="footer">
+					<p:commandButton value="Save" icon="fa fa-save"
+						actionListener="#{main.saveProvince()}"
+						onclick="PF('province').hide()" update="@all" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

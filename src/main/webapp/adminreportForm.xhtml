@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/admintemplate.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showDetail="true" autoUpdate="true" closable="true" />
+			<p:breadCrumb>
+				<p:menuitem />
+				<p:menuitem value="Find Report" />
+			</p:breadCrumb>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card">
+						<h1>
+							Print Report
+						</h1>
+						<p:panelGrid columns="4" 
+									styleClass="ui-panelgrid-blank form-group"
+									style="padding:20px;">
+									<p:selectOneMenu value="#{report.hospital}"
+													style="margin-top:20px;">
+													<f:selectItem itemLabel="Choose Hospital"
+														noSelectionOption="true" />
+													<f:selectItems value="#{report.hospitalList}" var="one"
+													itemLabel="#{one.name}" itemValue="#{one.id}"/>
+												</p:selectOneMenu>
+												<p:commandButton icon="fa fa-print" ajax="false"
+												actionListener="#{report.reportHospital()}"/>
+									</p:panelGrid>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

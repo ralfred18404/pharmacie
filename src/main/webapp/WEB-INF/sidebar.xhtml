@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pu="http://primefaces.org/ultima">
+
+
+	<p:panel toggleable="true"
+		style="top:148px;position:sticky;">
+		<h:form id="menuform_">
+			<p:growl showDetail="true" />
+			<div class="nano">
+				<div class="nano-content menu-scroll-content">
+					<pu:menu widgetVar="me">
+						<p:menuitem value="Province" outcome="ProvinceRegistration.xhtml" icon="fa fa-list" />
+							<p:menuitem value="Report" icon="fa fa-print" 
+							actionListener="#{report.hospitalPharmaciePage()}" ajax="false" />
+					</pu:menu>
+				</div>
+			</div>
+		</h:form>
+	</p:panel>
+	
+	
+	
+</ui:composition>

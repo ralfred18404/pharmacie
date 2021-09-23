@@ -1,0 +1,268 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/admintemplate.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:messages id="msg" showDetail="true" closable="true"
+				autoUpdate="true" />
+		</h:form>
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="card">
+					<p:accordionPanel multiple="false">
+
+						<p:tab title="Hospitals In #{main.district.name} District">
+							<h:form>
+								<h1>
+									<p:commandButton value="Add New" oncomplete="PF('hospital').show()"
+										icon="fa fa-plus" update="@widgetVar(hospital)" />
+								</h1>
+								<p:dataTable id="tab" style="margin-top:10px; width:100%"
+									value="#{main.hospitalList}" var="pro">
+
+									<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+									<p:column headerText="Hospital Name">
+									<center>
+									#{pro.name}
+									</center>
+						</p:column>
+
+									<p:column headerText="Director" width="120">
+										<center>
+											<h:panelGroup rendered="#{main.findDirectorH(pro) != null}">
+												<p:commandButton oncomplete="PF('directorView').show()"
+												 icon="fa fa-user" actionListener="#{main.directorDialogH(pro)}"
+												 update="@widgetVar(directorView)"/>
+											</h:panelGroup>
+											<h:panelGroup rendered="#{main.findDirectorH(pro) == null}">
+												<p:commandButton actionListener="#{main.hospitalDialog(pro)}" 
+												oncomplete="PF('hospi').show()"
+												update="@widgetVar(hospi)" icon="fa fa-plus" />
+											</h:panelGroup>
+										</center>
+									</p:column>
+								</p:dataTable>
+
+
+							</h:form>
+						</p:tab>
+
+
+						<p:tab title="Pharmacie in #{main.district.name} District">
+							<h:form id="form2">
+
+								<h1>
+									<p:commandButton value="Add New" oncomplete="PF('pharmacie').show()"
+										icon="fa fa-plus" update="@widgetVar(pharmacie)" />
+								</h1>
+								<p:dataTable id="tab" style="margin-top:10px; width:100%"
+									value="#{main.pharmacieList}" var="pro">
+
+									<p:column headerText="NO" width="20">
+									#{i=i+1}
+								</p:column>
+									<p:column headerText="Pharmacie Name">
+									<center>
+									#{pro.name}
+									</center>
+						</p:column>
+
+									<p:column headerText="Director" width="120">
+										<center>
+											<h:panelGroup  rendered="#{main.findDirectorP(pro) == null}">
+												<p:commandButton oncomplete="PF('pha').show()" 
+												 actionListener="#{main.pharmacieDialog(pro)}"
+												icon="fa fa-plus" update="@widgetVar(pha)" />
+											</h:panelGroup>
+											<h:panelGroup rendered="#{main.findDirectorP(pro) != null}">
+												<p:commandButton oncomplete="PF('directorView').show()"
+												 icon="fa fa-user" actionListener="#{main.directorDialogP(pro)}"
+												 update="@widgetVar(directorView)"/>
+											</h:panelGroup>
+										</center>
+									</p:column>
+									
+								</p:dataTable>
+							</h:form>
+						</p:tab>
+
+					</p:accordionPanel>
+
+				</div>
+			</div>
+		</div>
+
+		<h:form>
+			<p:dialog showEffect="clip" header="Registrar Hospital"
+				hideEffect="clip" closable="true" modal="true" widgetVar="hospital"
+				width="400">
+
+				<p:fieldset legend="Hospital">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText value="#{main.hospital.name}" />
+						<label>Hospital name</label>
+					</h:panelGroup>
+				</p:fieldset>
+				<f:facet name="footer">
+					<p:commandButton value="Save" icon="fa fa-save"
+						actionListener="#{main.saveHospital()}"
+						onclick="PF('hospital').hide()" update="@all" />
+				</f:facet>
+			</p:dialog>
+		</h:form>
+		<h:form>
+		<p:dialog  widgetVar="hospi" showEffect="clip"
+				hideEffect="clip" modal="true"
+				header="Registrar Director">
+				<p:fieldset legend="Director info">
+								<p:panelGrid columns="2" layout="grid"
+									styleClass="ui-panelgrid-blank form-group"
+									style="padding:20px;">
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:inputText value ="#{main.director1.id}"
+											style="width:95%;" />
+										<label>National Id</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield" style="margin-top:20px;">
+										<p:inputText value ="#{main.director1.firstName}"
+											style="width:95%;" />
+										<label>first Name</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield" style="margin-top:20px;">
+										<p:inputText value ="#{main.director1.lastName}"
+											style="width:95%;" />
+										<label>last Name</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:inputText value ="#{main.director1.phoneNumber}"
+											style="width:95%;" />
+										<label>phone Number</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:calendar style="width:95%;" value ="#{main.director1.dateOfbirth}"
+											pattern="dd/MM/yyyy" />
+										<label>Date of Birth</label>
+									</h:panelGroup>
+									
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:inputText value ="#{main.director1.email}"
+											style="width:95%;" />
+										<label>Email</label>
+									</h:panelGroup>
+								</p:panelGrid>
+								<p:commandButton onclick="PF('hospi').hide()" actionListener="#{main.saveDirectorH()}" 
+								value="Save" icon="fa fa-save" style="float:right;"
+									 update="@all"/>
+									
+							</p:fieldset>
+			</p:dialog>
+		</h:form>
+		<h:form>
+		<p:dialog  widgetVar="pha" showEffect="clip"
+				hideEffect="clip" modal="true"
+				header="Registrar Director">
+				<p:fieldset legend="Director info">
+								<p:panelGrid columns="2" layout="grid"
+									styleClass="ui-panelgrid-blank form-group"
+									style="padding:20px;">
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:inputText value ="#{main.director2.id}"
+											style="width:95%;" />
+										<label>National Id</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield" style="margin-top:20px;">
+										<p:inputText value ="#{main.director2.firstName}"
+											style="width:95%;" />
+										<label>first Name</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield" style="margin-top:20px;">
+										<p:inputText value ="#{main.director2.lastName}"
+											style="width:95%;" />
+										<label>last Name</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:inputText value ="#{main.director2.phoneNumber}"
+											style="width:95%;" />
+										<label>phone Number</label>
+									</h:panelGroup>
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:calendar style="width:95%;" value ="#{main.director2.dateOfbirth}"
+											pattern="dd/MM/yyyy" />
+										<label>Date of Birth</label>
+									</h:panelGroup>
+									
+									<h:panelGroup styleClass="md-inputfield"
+										style="margin-top:20px;">
+										<p:inputText value ="#{main.director2.email}"
+											style="width:95%;" />
+										<label>Email</label>
+									</h:panelGroup>
+								</p:panelGrid>
+								<p:commandButton onclick="PF('pha').hide()" actionListener="#{main.saveDirectorP()}" 
+								value="Save" icon="fa fa-save" style="float:right;"
+									 update="@all"/>
+									
+							</p:fieldset>
+			</p:dialog>
+		</h:form>
+		<h:form>
+		<p:dialog showEffect="clip" header="Registrar Pharmacie"
+				hideEffect="clip" closable="true" modal="true" widgetVar="pharmacie"
+				width="400">
+
+				<p:fieldset legend="Pharmacie">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText value="#{main.pharmacie.name}" />
+						<label>Pharmacy name</label>
+					</h:panelGroup>
+				</p:fieldset>
+				<f:facet name="footer">
+					<p:commandButton value="Save" icon="fa fa-save"
+						actionListener="#{main.savePharmacie()}"
+						onclick="PF('pharmacie').hide()" update="@all" />
+				</f:facet>
+			</p:dialog>
+			<p:dialog widgetVar="directorView" modal="true" showEffect="clip" hideEffect="clip"
+							closable="true" header="Director Profile">
+							<p:panelGrid columns="2">
+								<f:facet name="header">
+									<p:commandLink>
+										<i class="fa fa-user" style="font-size: 120px; color: #fff;" />
+									</p:commandLink>
+								</f:facet>
+								<h:outputLabel value="National Id" />
+								<h:outputLabel value="#{main.director.id}"
+									style="font-weight:bold;" />
+								<h:outputLabel value="FirstName" />
+								<h:outputLabel value="#{main.director.firstName}"
+									style="font-weight:bold;" />
+								<h:outputLabel value="LastName" />
+								<h:outputLabel value="#{main.director.lastName}"
+									style="font-weight:bold;" />
+								<h:outputLabel value="Email" />
+								<h:outputLabel value="#{main.director.email}"
+									style="font-weight:bold;" />
+								<h:outputLabel value="phoneNumber" />
+								<h:outputLabel value="#{main.director.phoneNumber}"
+									style="font-weight:bold;" />
+									<h:outputLabel value="Date Of Birth" />
+								<h:outputLabel value="#{main.director.dateOfbirth}"
+									style="font-weight:bold;" />
+							</p:panelGrid>
+						</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
